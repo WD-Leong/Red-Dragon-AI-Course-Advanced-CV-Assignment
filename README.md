@@ -1,10 +1,10 @@
 # Red Dragon AI Course Advanced NLP
-This repository contains the assignment as a requirement to complete the Red Dragon AI Course on Advanced NLP. There are two components to this assignment - (i) the Toxic Word Challenge, and (ii) a NLP work of our own choice. For (ii), a chatbot is trained using the [Transformer](https://arxiv.org/abs/1706.03762) network using the [movie dialogue](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) dataset. The processing of the dialogue dataset follows that of this [script](https://github.com/suriyadeepan/datasets/blob/master/seq2seq/cornell_movie_corpus/scripts/prepare_data.py) closely.
+This repository contains the assignment as a requirement to complete the Red Dragon AI Course on Advanced NLP. There are two components to this assignment - (i) the Toxic Word Challenge, and (ii) a NLP work of our own choice. For (ii), a chatbot is trained using the [Transformer](https://arxiv.org/abs/1706.03762) network using the [movie dialogue](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) dataset. This repository covers the first assignment.
 
-## 1. Toxic Word Challenge
+## Toxic Word Challenge Assignment
 The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, I applied a 1-Dimensional Convolution Layer across a window of 5 (`stride = 5`) for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
 
-### 1.1 Data Processing
+### Data Processing
 Simple processing of the data was done, including lower-casing the comments, separating punctuation and building the vocabulary to consist of words which have occurred at least 10 times. The maximum length of the comment was set to 70 tokens.
 ```
 tmp_comment = tmp_comment.replace("\n", " \n ")
@@ -31,7 +31,7 @@ Yo bitch Ja Rule is more succesful then you'll ever be whats up with you and hat
 ```
 which would serve to convey an inaccurate picture of the model's performance on the test dataset.
 
-### 1.2 Neural Network Model
+### 1-D Convolutional Neural Network Model
 For the model, we introduced a bias `tf.math.log((1.0-tmp_pi)/tmp_pi)` to the logits to indicate the imbalance in the labels. This generally follows the advice given in the [Focal Loss](https://arxiv.org/abs/1708.02002) paper. The model as returned by `toxic_model.summary()` is as follows:
 ```
 Model: "model"
@@ -67,7 +67,7 @@ _________________________________________________________________
 ```
 As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training.
 
-### 1.2 Losses
+### Model Losses
 To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473. The training progress over 25 epochs is shown in Fig. 1 below.
 <img src="toxic_word_training_loss.jpg" width="500">
 
@@ -84,37 +84,3 @@ The tuning of the weights is provided in Table 1 below.
 Table 1: Precision and Recall Performance on test dataset using different weights for the positive labels
 
 We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the True Positives increased, while False Negatives decreased and the False Positives increased. Another possible reason for the decrease in performance could be in the insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. 
-
-## 2. Movie Dialogue Chatbot
-We now move on to the 2nd assignment, which is an NLP project of my choice. As mentioned in the introduction, this assignment trains a movie dialogue chatbot using a Transformer network. The pre-processing of the data follow this [script](https://github.com/suriyadeepan/datasets/blob/master/seq2seq/cornell_movie_corpus/scripts/prepare_data.py) closely. 
-
-### 2.1 Transformer Model
-Our Transformer model makes some modifications to the original model in that it trains a positional embedding layer at each layer of the encoder and decoder. In addition, it also adds a residual connection between the input embeddings at both the encoder and decoder. Apart from that, there were no further modifications made. The model uses 6 layers for both the encoder and decoder, a hidden size of 512 and a feed-forward size of 2048. The sequence length at both the encoder and decoder was set to 10, and a vocabulary size of 8000 was used. A gradient clipping value of 1.0 was set during training as well. The model as returned by `seq2seq_model.summary()` is as follows:
-```
-Layer (type)                 Output Shape              Param #
-=================================================================
-Total params: 57,198,080
-Trainable params: 57,198,080
-Non-trainable params: 0
-_________________________________________________________________
-```
-Due to limitations on the GPU card, we accumulate the gradients manually across sub-batches of 32, then average it to apply the overall weight update across a larger batch, since we observe that larger batch sizes tend to stabilise the training of Transformer networks. Following the [T5 paper](https://arxiv.org/abs/1910.10683), 2000 warmup steps with a constant learning rate was applied `step_val = float(max(n_iter+1, warmup_steps))**(-0.5)`.
-
-### 2.2 Training the Dialogue Transformer Network
-As the training progressed, the quality of the response was observed to get better and better.
-```
---------------------------------------------------
-Iteration 250:
-Elapsed Time: 0.913459050655365 mins.
-Average Loss: 27.461065521240233
-Gradient Clip: 1.0
-Learning Rate: 0.0009882117
-
-Input Phrase:
-i didn t know which side you were on
-Generated Phrase:
-i EOS EOS EOS EOS EOS EOS EOS EOS EOS PAD
-Actual Response:
-now you know
---------------------------------------------------
-```
