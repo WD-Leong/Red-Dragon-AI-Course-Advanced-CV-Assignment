@@ -70,6 +70,7 @@ As can be observed, the model is relatively simple with about 1.7 million parame
 ### 1.2 Losses
 To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473. The training progress over 25 epochs is shown in Fig. 1 below.
 <img src="toxic_word_training_loss.jpg" width="500">
+
 Fig. 1: Training Loss of Toxic Word Model
 
 The tuning of the weights is provided in Table 1 below.
