@@ -17,7 +17,7 @@ The vocab is then built by
 vocab_list = sorted(
     [x for x, y in w_counter.items() if y >= min_count])
 ```
-where `min_count = 5`. In addition to that, in the test dataset, there are `-1` labels. These labels were assigned to a value of `0`, since it was empiracally observed that these comments were relatively neutral. Some examples include
+where `min_count = 10`. In addition to that, in the test dataset, there are `-1` labels. These labels were assigned to a value of `0`, since it was empiracally observed that these comments were relatively neutral. Some examples include
 ```
 \n\n == Sources == \n\n * Zawe Ashton on Lapland —  /  
 ```
@@ -63,6 +63,7 @@ tf_op_layer_add (TensorFlowO [(None, 6)]               0
 Total params: 1,711,334
 Trainable params: 1,711,334
 Non-trainable params: 0
+_________________________________________________________________
 ```
 As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training.
 
@@ -83,6 +84,18 @@ Table 1: Precision and Recall Performance on test dataset using different weight
 
 We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the True Positives increased, while False Negatives decreased and the False Positives increased. Another possible reason for the decrease in performance could be in the insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. 
 
+## 2. Movie Dialogue Chatbot
+We now move on to the 2nd assignment, which is an NLP project of my choice. As mentioned in the introduction, this assignment trains a movie dialogue chatbot using a Transformer network. The pre-processing of the data follow this [script](https://github.com/suriyadeepan/datasets/blob/master/seq2seq/cornell_movie_corpus/scripts/prepare_data.py) closely. 
 
-
+### 2.1 Transformer Model
+Our Transformer model makes some modifications to the original model in that it trains a positional embedding layer at each layer of the encoder and decoder. In addition, it also adds a residual connection between the input embeddings at both the encoder and decoder. Apart from that, there were no further modifications made. The model uses 6 layers for both the encoder and decoder, a hidden size of 512 and a feed-forward size of 2048. The sequence length at both the encoder and decoder was set to 10, and a vocabulary size of 8000 was used. The model as returned by `seq2seq_model.summary()` is as follows:
+```
+Layer (type)                 Output Shape              Param #
+=================================================================
+Total params: 57,198,080
+Trainable params: 57,198,080
+Non-trainable params: 0
+_________________________________________________________________
+```
+Due to limitations on the GPU card, we accumulate the gradients manually across sub-batches of 32, then average it to apply the overall weight update across a larger batch, since we observe that larger batch sizes tend to stabilise the training of Transformer networks. Following the [T5 paper](https://arxiv.org/abs/1910.10683), 2000 warmup steps with a constant learning rate was applied `step_val = float(max(n_iter+1, warmup_steps))**(-0.5)`.
 
