@@ -103,6 +103,7 @@ Due to limitations on the GPU card, we accumulate the gradients manually across 
 ### 2.2 Training the Dialogue Transformer Network
 As the training progressed, the quality of the response was observed to get better and better.
 ```
+--------------------------------------------------
 Iteration 250:
 Elapsed Time: 0.913459050655365 mins.
 Average Loss: 27.461065521240233
