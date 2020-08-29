@@ -74,7 +74,6 @@ To handle the skewed labels, we could apply either the Focal Loss, or to weigh t
 Fig. 1: Training Loss of Toxic Word Model
 
 The tuning of the weights is provided in Table 1 below.
-
 | Weight  | Precision | Recall |
 | ------- | --------- | ------ |
 |  1.0    | 0.1311    | 0.6797 |
@@ -84,3 +83,9 @@ The tuning of the weights is provided in Table 1 below.
 Table 1: Precision and Recall Performance on test dataset using different weights for the positive labels
 
 We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the True Positives increased, while False Negatives decreased and the False Positives increased. Another possible reason for the decrease in performance could be in the insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. 
+
+### Hyperparameter Tuning
+To be added.
+
+### Conclusion
+In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like BERT. The effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision.
