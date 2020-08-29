@@ -2,7 +2,7 @@
 This repository contains the assignment as a requirement to complete the Red Dragon AI Course on Advanced NLP. There are two components to this assignment - (i) the Toxic Word Challenge, and (ii) a NLP work of our own choice. For (ii), a chatbot is trained using the [Transformer](https://arxiv.org/abs/1706.03762) network using the [movie dialogue](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) dataset. The processing of the dialogue dataset follows that of this [script](https://github.com/suriyadeepan/datasets/blob/master/seq2seq/cornell_movie_corpus/scripts/prepare_data.py) closely.
 
 ## 1. Toxic Word Challenge
-The first assignement is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, I applied a 1-Dimensional Convolution Layer across a window of 5 (`stride = 5`) for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
+The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, I applied a 1-Dimensional Convolution Layer across a window of 5 (`stride = 5`) for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
 
 ### 1.1 Data Processing
 Simple processing of the data was done, including lower-casing the comments, separating punctuation and building the vocabulary to consist of words which have occurred at least 10 times. The maximum length of the comment was set to 70 tokens.
@@ -100,3 +100,20 @@ _________________________________________________________________
 ```
 Due to limitations on the GPU card, we accumulate the gradients manually across sub-batches of 32, then average it to apply the overall weight update across a larger batch, since we observe that larger batch sizes tend to stabilise the training of Transformer networks. Following the [T5 paper](https://arxiv.org/abs/1910.10683), 2000 warmup steps with a constant learning rate was applied `step_val = float(max(n_iter+1, warmup_steps))**(-0.5)`.
 
+### 2.2 Training the Dialogue Transformer Network
+As the training progressed, the quality of the response was observed to get better and better.
+```
+Iteration 250:
+Elapsed Time: 0.913459050655365 mins.
+Average Loss: 27.461065521240233
+Gradient Clip: 1.0
+Learning Rate: 0.0009882117
+
+Input Phrase:
+i didn t know which side you were on
+Generated Phrase:
+i EOS EOS EOS EOS EOS EOS EOS EOS EOS PAD
+Actual Response:
+now you know
+--------------------------------------------------
+```
