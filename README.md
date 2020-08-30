@@ -2,7 +2,7 @@
 This repository contains the assignment as a requirement to complete the Red Dragon AI Course on Advanced NLP. There are two components to this assignment - (i) the Toxic Word Challenge, and (ii) a NLP work of our own choice. For (ii), a chatbot is trained using the [Transformer](https://arxiv.org/abs/1706.03762) network using the [movie dialogue](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) dataset. This repository covers the first assignment.
 
 ## Toxic Word Challenge Assignment
-The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, a 1-Dimensional Convolution Layer across a window of 5 (`kernel = 5`) and a stride of 2, was applied for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
+The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, a 1-Dimensional Convolution Layer across a window of 5 (`kernel_size = 5`) and a stride of 2, was applied for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
 
 Taking a look at the data, there is a total of 6 classes corresponding to `toxic, severe_toxic, obscene, threat, insult, identity_hate`. A preview of a toxic and non-toxic comment is as shown below:
 
@@ -133,6 +133,9 @@ We can observe that increasing the weight of the positive labels generally leads
 
 ### Hyperparameter Tuning
 To be added.
+
+| Embedding Dimension | Number of Filters | Precision | Recall |
+| ------------------- | ----------------- | --------- | ------ |
 
 ### Conclusion
 In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like BERT. The effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision.
