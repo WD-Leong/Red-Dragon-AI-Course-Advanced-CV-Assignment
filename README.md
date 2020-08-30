@@ -136,13 +136,13 @@ Since the number of filters of our 1-D CNN model is, respectively, set to 2 and 
 
 | Embedding Dimension | Number of Filters | Precision | Recall |
 | ------------------- | ----------------- | --------- | ------ |
-| 16 | 32, 64 |  |  |
+| 16 | 32, 64 | 0.1088 | 0.8321 |
 | 32 | 64, 128 | 0.0962 | 0.8473 |
 | 64 | 128, 256 | 0.1081 | 0.8176 |
 
 Table 2: Hyper-parameter Tuning of the 1-D CNN Model
 
-We can observe that 
+Simpler models appear to have a better recall, with an embedding dimension of 32 achieving the highest recall. 
 
 ### Conclusion
-In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like [BERT](https://arxiv.org/abs/1810.04805). To handle the imbalanced dataset, higher weights were assigned to the positive labels. We study the effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision. Hyper-parameter tuning was applied.
+In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like [BERT](https://arxiv.org/abs/1810.04805). To handle the imbalanced dataset, higher weights were assigned to the positive labels. We study the effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision. Hyper-parameter tuning was applied, and we observe that simpler models seem to achieve a better recall.
