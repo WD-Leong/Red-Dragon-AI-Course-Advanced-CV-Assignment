@@ -111,7 +111,7 @@ Trainable params: 1,711,334
 Non-trainable params: 0
 _________________________________________________________________
 ```
-As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training.
+As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training, with the Adam optimizer being used to perform the weight updates.
 
 ### Model Losses
 To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473, with an accuracy of approximately 93%. The training progress over 25 epochs is shown in Fig. 1 below.
