@@ -47,7 +47,7 @@ This yields the correlation matrix:
 As the correlation matrix shows, some of the labels show a large degree of correlation between each other, for example, `toxic`, `obscene` and `insult` show a strong correlation ranging from 0.677 to 0.741. 
 
 ### Data Processing
-Simple processing of the data was done, including lower-casing the comments, separating punctuation using `wordpunct_tokenize` from `nltk.tokenize` and building the vocabulary to consist of words which have occurred at least 10 times. Due to time constaints, sub-word encoding was not used. The maximum length of the comment was set to 70 tokens.
+Simple processing of the data was done, including lower-casing the comments, separating punctuation using `wordpunct_tokenize` from `nltk.tokenize` and building the vocabulary to consist of words which have occurred at least 10 times. Due to time constaints, sub-word encoding was not used. The maximum length of the comment was set to 250 tokens.
 ```
 from collections import Counter
 from nltk.tokenize import wordpunct_tokenize as word_tokenizer
@@ -114,7 +114,7 @@ _________________________________________________________________
 As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training, with the Adam optimizer being used to perform the weight updates.
 
 ### Model Losses
-To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473, with an accuracy of approximately 93%. The training progress over 25 epochs is shown in Fig. 1 below.
+To handle the imbalanced labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473, with an accuracy of approximately 93%. The training progress over 25 epochs is shown in Fig. 1 below.
 
 <img src="toxic_word_training_loss.jpg" width="500">
 
@@ -132,10 +132,17 @@ Table 1: Precision and Recall Performance on test dataset using different weight
 We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the higher weight leads to an increase in the True Positives while decreasing the False Negatives at the same time. However, a side effect of it is that the number of False Positives also increases. 
 
 ### Hyperparameter Tuning
-To be added.
+Since the number of filters of our 1-D CNN model is, respectively, set to 2 and 4 times of the embedding dimension for the first and second convolutional layers. Hence, our hyper-parameter tuning focuses on changing the embedding dimension.
 
 | Embedding Dimension | Number of Filters | Precision | Recall |
 | ------------------- | ----------------- | --------- | ------ |
+| 16 | 32, 64 |  |  |
+| 32 | 64, 128 | 0.0962 | 0.8473 |
+| 64 | 128, 256 | 0.1081 | 0.8176 |
+
+Table 2: Hyper-parameter Tuning of the 1-D CNN Model
+
+We can observe that 
 
 ### Conclusion
-In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like BERT. The effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision.
+In this work, we trained a 1-D CNN to predict the toxicity of comments. Due to time constraints, we trained a relatively simple model and did not consider advanced methods like [BERT](https://arxiv.org/abs/1810.04805). To handle the imbalanced dataset, higher weights were assigned to the positive labels. We study the effects of weighing the sigmoid binary loss function was found to improve the recall at the expense of precision. Hyper-parameter tuning was applied.
