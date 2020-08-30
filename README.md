@@ -2,7 +2,7 @@
 This repository contains the assignment as a requirement to complete the Red Dragon AI Course on Advanced NLP. There are two components to this assignment - (i) the Toxic Word Challenge, and (ii) a NLP work of our own choice. For (ii), a chatbot is trained using the [Transformer](https://arxiv.org/abs/1706.03762) network using the [movie dialogue](http://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) dataset. This repository covers the first assignment.
 
 ## Toxic Word Challenge Assignment
-The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, a 1-Dimensional Convolution Layer across a window of 5 (`stride = 5`) was applied for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
+The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, a 1-Dimensional Convolution Layer across a window of 5 (`kernel = 5`) and a stride of 2, was applied for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
 
 Taking a look at the data, there is a total of 6 classes corresponding to `toxic, severe_toxic, obscene, threat, insult, identity_hate`. A preview of a toxic and non-toxic comment is as shown below:
 
@@ -78,7 +78,7 @@ Yo bitch Ja Rule is more succesful then you'll ever be whats up with you and hat
 which, when set to have a label of 0, would not be an accurate depiction of the model's performance on the test dataset. In addition, we also note that there is potentially insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. This might affect the model's ability to predict the labels in the test dataset.
 
 ### 1-D Convolutional Neural Network Model
-For the model, we introduced a bias `tf.math.log((1.0-tmp_pi)/tmp_pi)` to the logits to indicate the imbalance in the labels. This generally follows the advice given in the [Focal Loss](https://arxiv.org/abs/1708.02002) paper. The model as returned by `toxic_model.summary()` is as follows:
+For the model, we introduced a bias `tf.math.log((1.0-tmp_pi)/tmp_pi)` to the logits to indicate the extent of imbalance in the labels, with `tmp_pi = 0.95`. This generally follows the advice given in the [Focal Loss](https://arxiv.org/abs/1708.02002) paper. The model as returned by `toxic_model.summary()` is as follows:
 ```
 Model: "model"
 _________________________________________________________________
