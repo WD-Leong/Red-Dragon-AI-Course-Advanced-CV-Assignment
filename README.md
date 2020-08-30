@@ -120,7 +120,7 @@ To handle the skewed labels, we could apply either the Focal Loss, or to weigh t
 
 Fig. 1: Training Loss of Toxic Word Model
 
-The tuning of the weights is provided in Table 1 below.
+The effect of varying the weights is shown in Table 1 below.
 | Weight  | Precision | Recall |
 | ------- | --------- | ------ |
 |  1.0    | 0.1311    | 0.6797 |
