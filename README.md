@@ -4,9 +4,55 @@ This repository contains the assignment as a requirement to complete the Red Dra
 ## Toxic Word Challenge Assignment
 The first assignment is based on the [toxic word challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge). This dataset is heavily imbalanced and could contain multiple labels per comment. Since this is a binary classification problem, I applied a 1-Dimensional Convolution Layer across a window of 5 (`stride = 5`) for two times before passing the feature maps through 2 Fully-Connected layers to produce the logits. 
 
-### Data Processing
-Simple processing of the data was done, including lower-casing the comments, separating punctuation and building the vocabulary to consist of words which have occurred at least 10 times. The maximum length of the comment was set to 70 tokens.
+Taking a look at the data, there is a total of 6 classes corresponding to `toxic, severe_toxic, obscene, threat, insult, identity_hate`. A preview of a toxic and non-toxic comment is as shown below:
+
+| id | comment_text | toxic | severe_toxic | obscene | threat | insult | identity_hate |
+| -- | ------------ | ----- | ------------ | ------- | ------ | ------ | ------------- |
+| 0000997932d777bf | Explanation\nWhy the edits made under my username Hardcore Metallica Fan were reverted? They weren't vandalisms... | 0 | 0 | 0 | 0 | 0 | 0 |
+| 85b332fe1dcac880 | YOU ARE A PIECE OF F\*CKING SH\*T! \n\nf\*ck you! i like to change wikipedia so back off... poophead | 1 | 0 | 1 | 0 | 1 | 0 |
+
+To get an idea of how imbalanced the dataset is, we can compute the fraction of labels which are positive.
 ```
+import numpy as np
+import pandas as pd
+tmp_path = "C:/Users/admin/Desktop/Red Dragon/Advanced NLP/"
+
+train_data = pd.read_csv(tmp_path + "toxic_words/train.csv")
+tmp_labels = train_data[["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]]
+frac_label = np.sum(tmp_labels.values) / (tmp_labels.shape[0] * tmp_labels.shape[1])
+```
+This returns a value of `0.0367` or only 3.65% of the labels are positive. In addition, we can also observe that the positive labels display a correlation with each other.
+```
+tmp_labels = train_data[["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]]
+tmp_labels = tmp_labels.values
+
+corr_mat = np.zeros([6, 6])
+for n in range(6):
+    for m in range(6):
+        if n == m:
+            corr_mat[n, m] = 1.0
+        else:
+            corr_mat[n, m] = np.corrcoef(tmp_val[:, n], tmp_val[:, m])[0, 1]
+```
+This yields the correlation matrix:
+| label | toxic | severe_toxic | obscene | threat | insult | identity_hate |
+| ----- | ----- | ------------ | ------- | ------ | ------ | ------------- |
+| toxic | 1.0 | 0.3086191 | 0.67651452 | 0.15705841 | 0.64751813 | 0.26600938 |
+| severe_toxic | 0.3086191 | 1.0 | 0.40301446 | 0.12360129 | 0.37580715 | 0.20160021 |
+|obscene | 0.67651452 | 0.40301446 | 1.0 | 0.14117903 | 0.74127244 | 0.28686687 |
+| threat | 0.15705841 | 0.12360129 | 0.14117903 | 1.0 | 0.15002241 | 0.11512833 |
+| insult | 0.64751813 | 0.37580715 | 0.74127244 | 0.15002241 | 1.0 | 0.3377362 |
+| identity_hate | 0.26600938 | 0.20160021 | 0.28686687 | 0.11512833 | 0.33773625 | 1.0 |
+
+As the correlation matrix shows, some of the labels show a large degree of correlation between each other, for example, `toxic`, `obscene` and `insult` show a strong correlation ranging from 0.677 to 0.741. 
+
+### Data Processing
+Simple processing of the data was done, including lower-casing the comments, separating punctuation using `wordpunct_tokenize` from `nltk.tokenize` and building the vocabulary to consist of words which have occurred at least 10 times. Due to time constaints, sub-word encoding was not used. The maximum length of the comment was set to 70 tokens.
+```
+from collections import Counter
+from nltk.tokenize import wordpunct_tokenize as word_tokenizer
+
+w_counter = Counter()
 tmp_comment = tmp_comment.replace("\n", " \n ")
 tmp_tokens  = [
     x for x in word_tokenizer(tmp_comment.lower()) if x != ""]
@@ -29,7 +75,7 @@ Nonetheless, it is worth noting that there were toxic comments that should clear
 ```
 Yo bitch Ja Rule is more succesful then you'll ever be whats up with you and hating you sad mofuckas...i should bitch slap ur pethedic white faces and get you to kiss my ass you guys sicken me. Ja rule is about pride in da music man. dont diss that shit on him. and nothin is wrong bein like tupac he was a brother too...fuckin white boys get things right next time.,
 ```
-which would serve to convey an inaccurate picture of the model's performance on the test dataset.
+which would serve to convey an inaccurate picture of the model's performance on the test dataset. In addition, we also note that there is potentially insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. This may affect the model's performance later on.
 
 ### 1-D Convolutional Neural Network Model
 For the model, we introduced a bias `tf.math.log((1.0-tmp_pi)/tmp_pi)` to the logits to indicate the imbalance in the labels. This generally follows the advice given in the [Focal Loss](https://arxiv.org/abs/1708.02002) paper. The model as returned by `toxic_model.summary()` is as follows:
@@ -68,7 +114,8 @@ _________________________________________________________________
 As can be observed, the model is relatively simple with about 1.7 million parameters. Where the comment exceeds the maximum length set, it is truncated. Otherwise, it is padded. The embedding dimension was set to 32 and a batch size of 256 was chosen for training.
 
 ### Model Losses
-To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473. The training progress over 25 epochs is shown in Fig. 1 below.
+To handle the skewed labels, we could apply either the Focal Loss, or to weigh the sigmoid loss to allow a higher loss to be assigned to positive labels. In this assignment, I applied a weight to the binary loss as it showed better results. The training loss using a weight of 25.0 for positive labels yields a precision of 0.0962 and a recall of 0.8473, with an accuracy of approximately 93%. The training progress over 25 epochs is shown in Fig. 1 below.
+
 <img src="toxic_word_training_loss.jpg" width="500">
 
 Fig. 1: Training Loss of Toxic Word Model
@@ -82,7 +129,7 @@ The tuning of the weights is provided in Table 1 below.
 
 Table 1: Precision and Recall Performance on test dataset using different weights for the positive labels
 
-We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the True Positives increased, while False Negatives decreased and the False Positives increased. Another possible reason for the decrease in performance could be in the insufficient coverage between the test and training vocabularies, where approximately 20% of the tokens in the test vocabulary is not within the training vocabulary. 
+We can observe that increasing the weight of the positive labels generally leads to an increase in the recall but a decrease in the precision. This occurs because the higher weight leads to an increase in the True Positives while decreasing the False Negatives at the same time. However, a side effect of it is that the number of False Positives also increases. 
 
 ### Hyperparameter Tuning
 To be added.
