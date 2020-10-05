@@ -1,2 +1,2 @@
-# Red Dragon AI CV Course Assignment
+# Red Dragon AI Course CV Assignment
 To be added.
