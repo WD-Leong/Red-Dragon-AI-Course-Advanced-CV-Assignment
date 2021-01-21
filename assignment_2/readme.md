@@ -44,7 +44,7 @@ A model summary shows that the network has approximately 2.75 million parameters
 The training loss uses an L1 regression loss for the bounding box regression offsets and the Focal Loss for the classification loss. To evaluate the model's performance, the images are seperated into a training (80%) and validation (20%) dataset. Fig. 3 shows model's loss as the training progresses.
 
 Classification Loss | Regression Loss
-:------------------:|-----------------:
+:------------------:|:---------------:
 ![cls_loss](classification_loss.jpg) | ![reg_loss](regression_losses.jpg)
 
 Fig. 3: Classification and Regression Losses as training progresses
