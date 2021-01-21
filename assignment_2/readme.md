@@ -49,6 +49,6 @@ Classification Loss | Regression Loss
 
 Fig. 3: Classification and Regression Losses as training progresses
 
-Detection Output at Iteration 100 | Detection Output at Iteration 2500
-:------------------:|:---------------:
-![output_100](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_obj_detect_100.jpg) | ![output_500](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_obj_detect_2500.jpg)
+Detection Output at Iteration 100 | Detection Output at Iteration 2500 | Detection Output at Iteration 7500
+:------------------:|:---------------:|:---------------:
+![output_100](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_obj_detect_100.jpg) | ![output_2500](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_obj_detect_2500.jpg) | ![output_7500](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_obj_detect_7500.jpg)
