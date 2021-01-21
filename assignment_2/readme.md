@@ -56,7 +56,7 @@ Detection Output at Iteration 100 | Detection Output at Iteration 2500 | Detecti
 Fig. 4: Model's ability to detect the objects of interest as training progresses
 
 ### Average Precision of the Model
-Having trained the model, Table 1 shows the average precision computed for each of the class in the validation dataset. 
+Having trained the model, Table 1 shows the average precision computed for each of the class in the validation dataset. Overall, the model achieves a mean Average Precision (mAP) of 0.1227.
 
 Class | Average Precision
 :----:|:----------------:
@@ -81,4 +81,4 @@ sofa | 0.02973437293511299
 train | 0.29411764705882354
 tvmonitor | 0.04444602474754659
 
-Table 1: 
+Table 1: Average Precision of the different classes on the validation dataset
