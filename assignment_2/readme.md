@@ -82,3 +82,10 @@ train | 0.29411764705882354
 tvmonitor | 0.04444602474754659
 
 Table 1: Average Precision of the different classes on the validation dataset
+
+### Test Images
+As Fig. 5 shows, the model is unable to detect objects which are too close as well as has some missed detections. 
+
+Detection Results 1 | Detection Results 2
+:------------------:|:---------------:
+![football_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_1.jpg) | ![aeroplane_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_2.jpg)
