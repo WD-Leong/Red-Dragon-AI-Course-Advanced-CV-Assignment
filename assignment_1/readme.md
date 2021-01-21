@@ -4,11 +4,12 @@
 This repository contains the code and write-up for the first assignment of the Advanced Computer Vision course by Red Dragon AI. The assignment requires us to classify the category of a sketch as provided by the [QuickDraw](https://github.com/googlecreativelab/quickdraw-dataset) dataset. 
 
 ### Data
-The dataset we used is the set of images provided in `.npy` format. As the official site mentioned, the images are simplified into a 28x28 grayscale bitmap which are aligned to the center of the drawing's bounding box. Some examples are shown below. The dataset in this assignment has been filtered to contain only 20 classes out of the full 345 categories, with approximately 2.5 million drawings. Due to the limited hardware processing capabilities, only 12,500 images per category is used as the dataset for this assignment, leading to a total of 250,000 drawings. A few drawings are shown below.
+The dataset we used is the set of images provided in `.npy` format. As the official site mentioned, the images are simplified into a 28x28 grayscale bitmap which are aligned to the center of the drawing's bounding box. Some examples are shown below. The dataset in this assignment has been filtered to contain only 20 classes out of the full 345 categories, with approximately 2.5 million drawings. Due to the limited hardware processing capabilities, only 12,500 images per category is used as the dataset for this assignment, leading to a total of 250,000 drawings. Some sample drawings are shown in Fig. 1 below.
 
-Sample Image 1 | Sample Image 2 | Sample Image 3
+Alarm Clock | Birthday Cake | Eyeglasses
 :-------------------------:|:-------------------------:|:-------------------------:
 ![Alarm Clock](quickdraw_img_1.jpg) | ![Birthday Cake](quickdraw_img_2.jpg) | ![Eyeglasses](quickdraw_img_3.jpg)
+Fig. 1: Sample Drawings from the filtered dataset.
 
 ### Deep Learning Model
 The model that was applied is a relatively simple model consisting of a 2D Convolutional Layer with 32 filters and ReLU activation, followed by a 2D Max-Pool operation, followed by another 2D Convolutional Layer with 64 filters and ReLU activation, followed by a 2D Max-Pool operation. The feature maps are then flattened and sent through a Fully-Connected Layer with 64 units and ReLU activation and finally obtaining the logits by sending it through another Fully Connected Layer with 20 units. The code snippet where the model is built is provided below:
@@ -58,6 +59,7 @@ _________________________________________________________________
 As the model's summary shows, the model is relatively small with a total of 122,000 parameters. No weight regularization is applied.
 
 ### Training the Model
-To update the weights, the Cross Entropy Loss Function was applied. The model was trained for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01. 
-
+To update the weights, the Cross Entropy Loss Function was applied. The model was trained for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01. The training progress is shown in Fig. 2 below.
+![training_progress](quickdraw_losses.jpg)
+Fig. 2: Training Progress of CNN Model
 
