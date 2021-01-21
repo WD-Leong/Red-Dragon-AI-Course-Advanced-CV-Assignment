@@ -41,7 +41,7 @@ Fig. 2: Object Detection Architecture Applied.
 A model summary shows that the network has approximately 2.75 million parameters. The full breakdown of the number of parameters at each layer can be found in the file `voc_model_v5_summary.txt`.
 
 ### Training the Model
-The training loss uses an L1 regression loss for the bounding box regression offsets and the Focal Loss for the classification loss. To evaluate the model's performance, the images are seperated into a training (80%) and validation (20%) dataset. Fig. 3 shows model's loss as the training progresses.
+The training loss uses an L1 regression loss for the bounding box regression offsets and the Focal Loss for the classification loss. To evaluate the model's performance, the images are seperated into a training (80%) and validation (20%) dataset. Fig. 3 shows model's loss as the training progresses, while Fig. 4 shows the improvement of the model's ability to detect objects of interest as training progresses.
 
 Classification Loss | Regression Loss
 :------------------:|:---------------:
@@ -49,4 +49,6 @@ Classification Loss | Regression Loss
 
 Fig. 3: Classification and Regression Losses as training progresses
 
-Fig. 4 shows the improvement of the model's ability to detect objects of interest as training progresses.
+Detection Output at Iteration 100 | Detection Output at Iteration 500
+:------------------:|:---------------:
+![output_100](Results/voc_object_detect_100.jpg) | ![output_500](Results/voc_object_detect_500.jpg)
