@@ -63,6 +63,7 @@ To update the weights, the Cross Entropy Loss Function was applied. The model wa
 Training Progress | Sample Prediction
 :-------------------------:|:-------------------------:
 ![training_progress](quickdraw_losses.jpg) | ![Prediction](quickdraw_img.jpg)
+
 Fig. 2: (Left) Training Progress of CNN Model and (Right) Prediction Output of Classifier
 
 
