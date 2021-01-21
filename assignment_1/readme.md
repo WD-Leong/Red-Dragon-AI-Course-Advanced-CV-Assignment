@@ -59,7 +59,9 @@ _________________________________________________________________
 As the model's summary shows, the model is relatively small with a total of 122,000 parameters. No weight regularization is applied.
 
 ### Training the Model
-To update the weights, the Cross Entropy Loss Function was applied. The model was trained for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01. The training progress is shown in Fig. 2 below.
-![training_progress](quickdraw_losses.jpg)
-Fig. 2: Training Progress of CNN Model
+To update the weights, the Cross Entropy Loss Function was applied. The model was trained for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01. The training progress is shown in Fig. 2 below, with a final validation accuracy of 82.8%.
+Training Progress | Sample Prediction
+![training_progress](quickdraw_losses.jpg) | ![Prediction](quickdraw_img.jpg)
+Fig. 2: (Left) Training Progress of CNN Model and (Right) Prediction Output of Classifier
+
 
