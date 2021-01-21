@@ -45,8 +45,8 @@ The training loss uses an L1 regression loss for the bounding box regression off
 
 Classification Loss | Regression Loss
 :------------------:|---------------:
-![cls_loss](classification_loss.jpg) | ![reg_loss](regression_loss.jpg)
+![cls_loss](classification_loss.jpg) | ![reg_loss](regression_losses.jpg)
 
 Fig. 3: Classification and Regression Losses as training progresses
 
-
+Fig. 4 shows the improvement of the model's ability to detect objects of interest as training progresses.
