@@ -88,4 +88,4 @@ As Fig. 5 shows, the model is unable to detect objects which are too close as we
 
 Detection Results 1 | Detection Results 2
 :------------------:|:---------------:
-![football_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_1.jpg) | ![aeroplane_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_2.jpg)
+![football_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_obj_detection_1.jpg) | ![aeroplane_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_obj_detection_2.jpg)
