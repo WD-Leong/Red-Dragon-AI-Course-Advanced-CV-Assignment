@@ -7,7 +7,7 @@ This repository contains the code and write-up for the second assignment of the 
 The VOC dataset consists of approximately 17,000 images annotated with a total of 20 object classes including Persons, Cars, Bicycles etc. Some sample images are shown in Fig. 1 below.
 
 Sample Image 1 | Sample Image 2
-:-------------:|---------------:
+:-------------:|:-------------:
 ![voc_image_1](voc_image_1.jpg) | ![voc_image_2](voc_image_2.jpg)
 
 Fig. 1: Sample Images from the VOC dataset.
