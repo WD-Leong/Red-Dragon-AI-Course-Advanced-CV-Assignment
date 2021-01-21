@@ -59,13 +59,20 @@ _________________________________________________________________
 As the model's summary shows, the model is relatively small with a total of 122,000 parameters. No weight regularization is applied.
 
 ### Training the Model
-To update the weights, the Cross Entropy Loss Function was applied. The model was trained for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01. This is done by compiling the Tensorflow model as follows:
+To train the model, the Cross Entropy Loss Function was applied. The weights were updated for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01 using the Adam optimizer. This is done by first compiling the Tensorflow model
 ```
 quickdraw_model.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate), 
     loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
     metrics=["sparse_categorical_accuracy"])
 ```
+followed by running
+```
+quickdraw_model.fit(
+    X_train, y_train, batch_size=batch_size, 
+    epochs=num_epochs, validation_data=(X_test, y_test))
+```
+to update the weights.
 
 The training progress is shown in Fig. 2 below, with a final validation accuracy of 82.8%.
 Training Progress | Sample Prediction
