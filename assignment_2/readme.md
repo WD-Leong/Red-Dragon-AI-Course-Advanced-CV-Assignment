@@ -51,4 +51,4 @@ Fig. 3: Classification and Regression Losses as training progresses
 
 Detection Output at Iteration 100 | Detection Output at Iteration 500
 :------------------:|:---------------:
-![output_100](Results/voc_object_detect_100.jpg) | ![output_500](Results/voc_object_detect_500.jpg)
+![output_100](Results\voc_object_detect_100.jpg) | ![output_500](.Results\voc_object_detect_500.jpg)
