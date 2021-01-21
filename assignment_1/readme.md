@@ -59,7 +59,7 @@ _________________________________________________________________
 As the model's summary shows, the model is relatively small with a total of 122,000 parameters. No weight regularization is applied.
 
 ### Training the Model
-To train the model, the Cross Entropy Loss Function was applied. The weights were updated for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01 using the Adam optimizer. This is done by first compiling the Tensorflow model
+To train the model, the Cross Entropy Loss Function was applied. The weights were updated for a total of 50 epochs with a batch size of 256 per step and a constant learning rate of 0.01 using the Adam optimizer. For evaluation of the model's performance, the data is split into training (80%) and validation (20%) datasets. Before the weights are updated, the Tensorflow model has to be compiled first via
 ```
 quickdraw_model.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate), 
@@ -72,13 +72,13 @@ quickdraw_model.fit(
     X_train, y_train, batch_size=batch_size, 
     epochs=num_epochs, validation_data=(X_test, y_test))
 ```
-to update the weights.
+to update the weights. The training progress is shown in Fig. 2 below, with a final validation accuracy of 82.8%.
 
-The training progress is shown in Fig. 2 below, with a final validation accuracy of 82.8%.
 Training Progress | Sample Prediction
 :-------------------------:|:-------------------------:
 ![training_progress](quickdraw_losses.jpg) | ![Prediction](quickdraw_img.jpg)
 
 Fig. 2: (Left) Training Progress of CNN Model and (Right) Prediction Output of Classifier
 
-
+### Conclusion
+In this assignment, a simple CNN model was trained to classify drawings into their respective categories. The model was able to achieve an accuracy of 82.8% on the validation dataset.
