@@ -89,3 +89,6 @@ As Fig. 5 shows, the model is unable to detect objects which are too close as we
 Detection Results 1 | Detection Results 2
 :------------------:|:---------------:
 ![football_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_1.jpg) | ![aeroplane_detection](https://github.com/WD-Leong/Red-Dragon-AI-Course-Advanced-CV-Assignment/blob/master/assignment_2/Results/voc_lite_object_detection_2.jpg)
+
+### Conclusion
+A lightweight one-stage object detection model using MobileNetv2 as the backbone model with 4 anchors was trained in this assignment. Due to the small size of model as well as the input image, the model's performance is generally not particularly good, achieving an mAP of 0.1227 on the validation dataset. The hardware used is a Nvidia Quadro P1000 4GB Graphics Card.
