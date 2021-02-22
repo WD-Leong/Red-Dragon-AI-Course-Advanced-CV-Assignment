@@ -212,15 +212,18 @@ def focal_loss(
     foc_loss_stable = tmp_abs_term + tmp_x_pos - tmp_x_neg
     return tf.reduce_sum(foc_loss_stable, axis=[1, 2, 3])
 ```
+To train the model, a decay rate of 0.99 is applied after each epoch, with an initial learning rate of 0.001. The batch size was set to be 96 and the `Adam` optimizer was used.
 
 ### Training Progress
-Fig. 3 shows model's loss as the training progresses, while Fig. 4 shows the improvement of the model's ability to detect objects of interest as training progresses, from noisy, random detections to being able to detect the first object in the image (the person) and finally being able to detect both objects in the image (the person and the horse).
+Fig. 3 shows model's regression and classification losses separately as the training progresses. Generally, it can be observed that the loss decreases steadily as the number of steps increases.
 
 Classification Loss | Regression Loss
 :------------------:|:---------------:
 ![cls_loss](classification_loss.jpg) | ![reg_loss](regression_losses.jpg)
 
-Fig. 3: Classification and Regression Losses as training progresses<\br>
+Fig. 3: Classification and Regression Losses as training progresses
+
+Fig. 4 shows the improvement of the model's ability to detect objects of interest as training progresses, from noisy, random detections to being able to detect the first object in the image (the person) and finally being able to detect both objects in the image (the person and the horse).
 
 Detection Output at Iteration 100 | Detection Output at Iteration 1000 | Detection Output at Iteration 2500
 :------------------:|:---------------:|:---------------:
