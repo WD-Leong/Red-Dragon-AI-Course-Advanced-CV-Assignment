@@ -220,7 +220,7 @@ Classification Loss | Regression Loss
 :------------------:|:---------------:
 ![cls_loss](classification_loss.jpg) | ![reg_loss](regression_losses.jpg)
 
-Fig. 3: Classification and Regression Losses as training progresses
+Fig. 3: Classification and Regression Losses as training progresses<\br>
 
 Detection Output at Iteration 100 | Detection Output at Iteration 1000 | Detection Output at Iteration 2500
 :------------------:|:---------------:|:---------------:
@@ -234,9 +234,6 @@ Fig. 4: Model's ability to detect the objects of interest as training progresses
 
 ## Inference
 To perform inference, Non-Maximal Suppression (NMS) is applied on the predictions. Some inference results are provided in Fig. 5, where the classification threshold is set to 0.50 and the IoU threshold is set to 0.15.
-
-### Inference Results
-As Fig. 5 shows, the model is unable to detect objects which are too close as well as has some missed detections. 
 
 Detection Results 1 | Detection Results 2
 :------------------:|:---------------:
